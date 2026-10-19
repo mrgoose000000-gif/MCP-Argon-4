@@ -42,7 +42,9 @@ def print_banner():
     print("  ⭐ Hỗ trợ: Antigravity IDE | Antigravity App | Antigravity CLI (agy)")
     print(f"  📂 Thư mục dự án: {REPO_DIR}")
     print(f"  🐍 Python runtime: {PYTHON_EXE}")
+    print("  👤 Bản quyền: Copyright (c) 2026 NDKBVH")
     print("=" * 72)
+
 
 
 def check_and_install_dependencies():

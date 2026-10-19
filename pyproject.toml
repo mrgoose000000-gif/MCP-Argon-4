@@ -9,8 +9,10 @@ description = "Cầu nối tích hợp model AI từ Google Gemini Web (gemini.g
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
-    { name = "Antigravity Pair Programmer" }
+    { name = "NDKBVH" }
 ]
+license = { text = "MIT" }
+
 dependencies = [
     "gemini-webapi>=2.1.1",
     "rookiepy>=0.5.6",

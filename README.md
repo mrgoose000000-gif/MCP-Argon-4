@@ -146,7 +146,9 @@ Mặc dù về mặt kỹ thuật không thuộc kênh chính thống, nhưng b�
 
 ---
 
-## 🤝 Đóng Góp & Giấy Phép
+## 🤝 Đóng Góp & Bản Quyền (License & Copyright)
 
-Mọi đóng góp (Pull Request, Issue, Feature Request) đều được chào đón! Dự án được phát hành theo giấy phép **MIT License**.
+- **Tác quyền & Bản quyền**: Copyright (c) 2026 **NDKBVH**. All rights reserved.
+- **Giấy phép**: Dự án được phát hành theo giấy phép mã nguồn mở **[MIT License](LICENSE)**. Mọi đóng góp (Pull Request, Issue, Feature Request) đều được chào đón!
+
 
