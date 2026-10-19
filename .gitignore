@@ -51,3 +51,11 @@ temp/
 workflows/g4.md
 skills/g4/
 
+# Quản lý task nội bộ cá nhân (giữ riêng tư cục bộ, không đẩy lên Git)
+TASKS.md
+
+# Script đẩy lên GitHub cá nhân (giữ trên máy cục bộ, không phát hành trên Git)
+day_len_github.bat
+day_len_github.ps1
+
+

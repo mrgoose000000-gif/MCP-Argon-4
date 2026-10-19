@@ -209,7 +209,7 @@ GEMINI_PROXY=
 | `run_mcp.py` | Entrypoint độc lập chạy MCP Server |
 | `run_proxy.py` | Entrypoint độc lập chạy OpenAI Proxy Server |
 | `pyproject.toml` & `requirements.txt` | Cấu hình cài đặt gói pip |
-| `.agent/history/` | Nhật ký prompt và trạng thái task theo quy chuẩn của người dùng |
+
 
 ---
 
