@@ -1,19 +1,15 @@
 # NHIỆM VỤ HIỆN TẠI (CURRENT TASK)
 
-- **Tên nhiệm vụ:** Bổ sung phần Khuyến nghị sử dụng & Tuân thủ quy chế Google vào tài liệu dự án và đẩy vào Git
-- **Thời điểm bắt đầu:** 2026-10-19 20:08
-- **Mục tiêu:** 
-  - Đưa phần phân tích và khuyến nghị về Điều khoản dịch vụ Google (Google Terms of Service), thực tế sử dụng dự án sạch và khuyến nghị tài khoản phụ vào `README.md` và `huong_dan_tich_hop_gemini_web_v1.0.md`.
-  - Tạo commit git và đẩy (push) lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`.
-- **Checklist thực hiện:**
-  - [ ] Cập nhật `README.md` bổ sung mục Khuyến nghị sử dụng & Tuân thủ quy chế Google
-  - [ ] Cập nhật `huong_dan_tich_hop_gemini_web_v1.0.md` bổ sung mục Khuyến nghị
-  - [ ] Stage và kiểm tra diff git
-  - [ ] Commit với message mô tả rõ ràng
-  - [ ] Đẩy code lên GitHub repository (git push origin main)
-  - [ ] Cập nhật `TASKS.md` và `CURRENT_TASK.md` hoàn thành
-- **Files liên quan:**
-  - `README.md`
-  - `huong_dan_tich_hop_gemini_web_v1.0.md`
-  - `TASKS.md`
-  - `.agent/history/CURRENT_TASK.md`
+- **Trạng thái:** Sẵn sàng nhận nhiệm vụ mới.
+- **Nhiệm vụ vừa hoàn thành:** Cấu hình mặc định toàn diện sang mô hình Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất)
+- **Thời điểm hoàn thành:** 2026-10-19 20:25
+- **Tóm tắt kết quả:**
+  - Thiết lập `GEMINI_EXTENDED_THINKING=true` và hàm `get_default_extended_thinking()` trong `gemini2anti/config.py`.
+  - Cập nhật `gemini2anti/client.py`: Mặc định kích hoạt Extended Thinking cho tất cả các phương thức `generate`, `generate_stream`, và `chat`.
+  - Cập nhật `gemini2anti/mcp_server.py`: Thiết lập `extended_thinking: bool = True` mặc định cho các tool `gemini_web_ask` và `gemini_web_chat`.
+  - Cập nhật `gemini2anti/proxy_server.py`: Đặt mặc định `extended_thinking=True` cho OpenAI API proxy.
+  - Cập nhật `gemini2anti/cli.py`: Mặc định `--model gemini-4` và `--thinking` (True) khi chạy lệnh chat trong terminal.
+  - Cập nhật schemas JSON MCP của Antigravity (`~/.gemini/antigravity/mcp/gemini-web/gemini_web_ask.json` và `gemini_web_chat.json`) với `extended_thinking` mặc định là `true`.
+  - Cập nhật toàn bộ các file Workflows (`/kg4`, `/g4`) và Skills (`@kg4`, `@g4`) trong repo và đồng bộ sang cấu hình toàn cục `~/.gemini/config/`.
+  - Cập nhật quy tắc chỉ dẫn Agent trong `AGENTS.md` và `.agent/rules/gemini4.md` luôn gọi với `extended_thinking=True`.
+  - Kiểm thử trực tiếp gọi `gemini_web_ask`: Trả về kết quả chính xác và tự động bật Extended Thinking.

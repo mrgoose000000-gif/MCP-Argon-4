@@ -87,7 +87,7 @@ def setup_cookie_and_env():
             # Tự động xuất .env nếu chưa có
             env_file = REPO_DIR / ".env"
             if not env_file.exists():
-                env_content = f"# Tự động tạo bởi installer\nGEMINI_SECURE_1PSID={psid}\nGEMINI_SECURE_1PSIDTS={psidts}\nGEMINI_SECURE_1PSIDCC={psidcc or ''}\nGEMINI_DEFAULT_MODEL=gemini-4\nGEMINI_AUTO_BROWSER_COOKIES=true\n"
+                env_content = f"# Tự động tạo bởi installer\nGEMINI_SECURE_1PSID={psid}\nGEMINI_SECURE_1PSIDTS={psidts}\nGEMINI_SECURE_1PSIDCC={psidcc or ''}\nGEMINI_DEFAULT_MODEL=gemini-4\nGEMINI_EXTENDED_THINKING=true\nGEMINI_AUTO_BROWSER_COOKIES=true\n"
                 env_file.write_text(env_content, encoding="utf-8")
                 print("  📝 Đã tạo file .env cấu hình cục bộ.")
             return True

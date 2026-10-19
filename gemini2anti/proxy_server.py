@@ -49,7 +49,8 @@ class ChatCompletionRequest(BaseModel):
     stream: Optional[bool] = False
     temperature: Optional[float] = 0.7
     max_tokens: Optional[int] = None
-    extended_thinking: Optional[bool] = False
+    extended_thinking: Optional[bool] = True
+
 
 
 @app.get("/health")
@@ -155,7 +156,7 @@ async def chat_completions(req: ChatCompletionRequest):
                 async for delta_text in bridge.generate_stream(
                     prompt=prompt,
                     model=model_name,
-                    extended_thinking=req.extended_thinking or False
+                    extended_thinking=True if req.extended_thinking is None else req.extended_thinking
                 ):
                     chunk_obj = {
                         "id": chat_id,
@@ -208,7 +209,7 @@ async def chat_completions(req: ChatCompletionRequest):
         res = await bridge.generate(
             prompt=prompt,
             model=model_name,
-            extended_thinking=req.extended_thinking or False
+            extended_thinking=True if req.extended_thinking is None else req.extended_thinking
         )
         content_text = res.get("text", "")
         images = res.get("images", [])

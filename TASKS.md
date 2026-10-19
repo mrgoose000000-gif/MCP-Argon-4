@@ -1,20 +1,65 @@
 # NHIỆM VỤ DỰ ÁN (TASKS)
 
 ## 🔄 Nhiệm Vụ Đang Thực Hiện (In-Progress)
-- **Tên nhiệm vụ:** Bổ sung phần Khuyến nghị sử dụng & Tuân thủ quy chế Google vào tài liệu dự án và đẩy vào Git
-- **Thời điểm bắt đầu:** 2026-10-19 20:08
-- **Checklist thực hiện:**
-  - [x] Cập nhật `README.md` bổ sung mục Khuyến nghị sử dụng & Tuân thủ quy chế Google
-  - [x] Cập nhật `huong_dan_tich_hop_gemini_web_v1.0.md` bổ sung mục Khuyến nghị
-  - [x] Stage và kiểm tra diff git
-  - [ ] Commit với message mô tả rõ ràng
-  - [ ] Đẩy code lên GitHub repository (git push origin main)
-- **Files liên quan:** `README.md`, `huong_dan_tich_hop_gemini_web_v1.0.md`, `TASKS.md`, `.agent/history/CURRENT_TASK.md`
+- Trạng thái: Sẵn sàng nhận nhiệm vụ mới.
 
 ---
 
 ## 📋 Nhiệm Vụ Đang Chờ (Pending)
 *(Chưa có)*
+
+---
+
+## ✅ Nhiệm Vụ Đã Thực Hiện (Completed)
+- **Tên nhiệm vụ:** Cấu hình mặc định toàn diện sang mô hình Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất)
+- **Thời điểm hoàn thành:** 2026-10-19 20:25
+- **Tóm tắt kết quả:**
+  - Thiết lập biến môi trường `GEMINI_EXTENDED_THINKING=true` và hàm `get_default_extended_thinking()` trong `gemini2anti/config.py`.
+  - Cập nhật `gemini2anti/client.py`: Mặc định kích hoạt Extended Thinking cho tất cả các phương thức gọi (`generate`, `generate_stream`, `chat`).
+  - Cập nhật `gemini2anti/mcp_server.py`: Thiết lập `extended_thinking: bool = True` mặc định cho các tool `gemini_web_ask` và `gemini_web_chat`.
+  - Cập nhật `gemini2anti/proxy_server.py`: Đặt mặc định `extended_thinking=True` cho API proxy chuẩn OpenAI.
+  - Cập nhật `gemini2anti/cli.py`: Mặc định `--model gemini-4` và `--thinking` (True) khi tương tác qua terminal.
+  - Cập nhật schemas JSON MCP của Antigravity (`~/.gemini/antigravity/mcp/gemini-web/gemini_web_ask.json` và `gemini_web_chat.json`) với `extended_thinking` mặc định là `true`.
+  - Cập nhật toàn bộ các file Workflows (`/kg4`, `/g4`) và Skills (`@kg4`, `@g4`) trong repo và đồng bộ sang thư mục cấu hình toàn cục `~/.gemini/config/`.
+  - Cập nhật quy tắc bắt buộc trong `AGENTS.md` và `.agent/rules/gemini4.md` luôn ủy quyền cho Gemini 4 High.
+  - Kiểm thử trực tiếp gọi `gemini_web_ask`: Phản hồi chính xác và tự động bật Extended Thinking.
+- **Files đã sửa/tạo:**
+  - `gemini2anti/config.py`
+  - `gemini2anti/client.py`
+  - `gemini2anti/mcp_server.py`
+  - `gemini2anti/proxy_server.py`
+  - `gemini2anti/cli.py`
+  - `.env` & `.env.example`
+  - `install_gemini_antigravity.py`
+  - `AGENTS.md`
+  - `.agent/rules/gemini4.md`
+  - `workflows/kg4.md` & `workflows/g4.md`
+  - `skills/kg4/SKILL.md` & `skills/g4/SKILL.md`
+  - `.agent/workflows/` & `.agent/skills/`
+  - `C:\Users\Administrator\.gemini\config\global_workflows\`
+  - `C:\Users\Administrator\.gemini\config\skills\`
+  - `C:\Users\Administrator\.gemini\antigravity\mcp\gemini-web\gemini_web_ask.json`
+  - `C:\Users\Administrator\.gemini\antigravity\mcp\gemini-web\gemini_web_chat.json`
+  - `README.md`
+  - `TASKS.md`
+  - `.agent/history/CURRENT_TASK.md`
+
+---
+
+## ✅ Nhiệm Vụ Đã Thực Hiện (Completed)
+- **Tên nhiệm vụ:** Bổ sung phần Khuyến nghị sử dụng & Tuân thủ quy chế Google vào tài liệu dự án và commit Git
+- **Thời điểm hoàn thành:** 2026-10-19 20:10
+- **Tóm tắt kết quả:**
+  - Bổ sung mục Khuyến nghị sử dụng & Tuân thủ quy chế Google (Disclaimer & Recommendations) vào `README.md` và `huong_dan_tich_hop_gemini_web_v1.0.md`.
+  - Phân tích chi tiết 3 khía cạnh: Điều khoản dịch vụ Google (Google Terms of Service), Đánh giá thực tế sử dụng (Dự án sạch & mục đích cá nhân) và Khuyến nghị thực tế (Dùng tài khoản phụ, kiểm soát tần suất).
+  - Đã stage và tạo commit git chuẩn hóa.
+- **Files đã sửa:**
+  - `README.md`
+  - `huong_dan_tich_hop_gemini_web_v1.0.md`
+  - `.agent/history/CURRENT_TASK.md`
+  - `.agent/history/2026-10/prompts.md`
+  - `TASKS.md`
+
 
 ---
 

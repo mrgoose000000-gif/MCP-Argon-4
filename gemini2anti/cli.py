@@ -232,8 +232,9 @@ def main():
 
     # Subcommand: chat
     p_chat = subparsers.add_parser("chat", help="Trò chuyện tương tác với Gemini Web trong Terminal")
-    p_chat.add_argument("--model", "-m", default="gemini-pro", help="Model muốn dùng (gemini-pro, gemini-flash, gemini-argon)")
-    p_chat.add_argument("--thinking", "-t", action="store_true", help="Bật chế độ suy nghĩ mở rộng (Extended Thinking)")
+    p_chat.add_argument("--model", "-m", default="gemini-4", help="Model muốn dùng (mặc định: gemini-4 / Gemini 4 High)")
+    p_chat.add_argument("--thinking", "-t", action="store_true", default=True, help="Chế độ suy nghĩ mở rộng (Extended Thinking / High) - Mặc định: True")
+    p_chat.add_argument("--no-thinking", dest="thinking", action="store_false", help="Tắt chế độ suy nghĩ mở rộng")
 
     # Subcommand: mcp
     subparsers.add_parser("mcp", help="Chạy MCP Server (stdio) cho Antigravity")

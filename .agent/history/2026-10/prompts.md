@@ -92,3 +92,6 @@ Press any key to continue . . .
 
 ## [2026-10-19 20:01:35]
 **Prompt:** `việc như dự án này tôi làm thì hợp lệ quy chế google chứ, hiển nhiên tôi sẽ dùng antigravity làm những dự án sạch`
+
+## [2026-10-19 20:17:57]
+**Prompt:** `điều chỉnh để khi gọi thì luôn là gemini 4 high`

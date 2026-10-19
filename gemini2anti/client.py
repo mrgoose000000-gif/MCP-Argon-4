@@ -5,7 +5,7 @@ Module lõi quản lý kết nối và phiên làm việc với Google Gemini We
 import asyncio
 from typing import AsyncGenerator, Dict, List, Optional, Any
 from gemini_webapi import GeminiClient
-from gemini2anti.config import get_gemini_credentials, get_default_model, get_proxy
+from gemini2anti.config import get_gemini_credentials, get_default_model, get_default_extended_thinking, get_proxy
 
 
 class GeminiWebBridge:
@@ -141,12 +141,15 @@ class GeminiWebBridge:
         self,
         prompt: str,
         model: Optional[str] = None,
-        extended_thinking: bool = False,
+        extended_thinking: Optional[bool] = None,
         files: Optional[List[Any]] = None,
     ) -> Dict[str, Any]:
         """
-        Tạo phản hồi hoàn chỉnh từ Gemini Web.
+        Tạo phản hồi hoàn chỉnh từ Gemini Web (mặc định Gemini 4 High - Extended Thinking).
         """
+        if extended_thinking is None:
+            extended_thinking = get_default_extended_thinking()
+
         last_err = None
         for attempt in range(3):
             try:
@@ -176,12 +179,15 @@ class GeminiWebBridge:
         self,
         prompt: str,
         model: Optional[str] = None,
-        extended_thinking: bool = False,
+        extended_thinking: Optional[bool] = None,
         files: Optional[List[Any]] = None,
     ) -> AsyncGenerator[str, None]:
         """
         Stream từng mẩu phản hồi (token delta) từ Gemini Web.
         """
+        if extended_thinking is None:
+            extended_thinking = get_default_extended_thinking()
+
         client = await self.init_client()
         resolved_model = self._resolve_model(client, model)
 
@@ -203,11 +209,15 @@ class GeminiWebBridge:
         message: str,
         session_id: str = "default",
         model: Optional[str] = None,
-        extended_thinking: bool = False,
+        extended_thinking: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """
         Gửi tin nhắn trong phiên hội thoại nhiều lượt (Multi-turn Chat Session).
+        Mặc định sử dụng Gemini 4 High (Extended Thinking).
         """
+        if extended_thinking is None:
+            extended_thinking = get_default_extended_thinking()
+
         client = await self.init_client()
         resolved_model = self._resolve_model(client, model)
 

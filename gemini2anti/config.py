@@ -94,7 +94,17 @@ def get_default_model() -> str:
     return os.getenv("GEMINI_DEFAULT_MODEL", "gemini-4")
 
 
+def get_default_extended_thinking() -> bool:
+    """
+    Trả về chế độ suy nghĩ mở rộng mặc định (Extended Thinking / High reasoning).
+    Mặc định luôn là True (Gemini 4 High).
+    """
+    val = os.getenv("GEMINI_EXTENDED_THINKING", "true").lower()
+    return val in ["1", "true", "yes", "high", "on"]
+
+
 def get_proxy() -> Optional[str]:
     """Trả về proxy nếu có."""
     proxy = os.getenv("GEMINI_PROXY", "").strip()
     return proxy if proxy else None
+

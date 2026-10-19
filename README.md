@@ -14,13 +14,14 @@ Chỉ với **1 cú click chuột**, hệ thống tự động nhận diện tà
 ## 🌟 Điểm Nổi Bật
 
 - ⚡ **1-Click Tự Động Kết Nối**: Bấm `ket_noi_gemini_antigravity.bat` (Windows) hoặc chạy `./ket_noi_gemini_antigravity.sh` (Linux/macOS) — Tự động cài đặt thư viện, quét cookie và đăng ký toàn diện.
-- 🧠 **Mô hình Gemini 4 Argon thực tế**: Trực tiếp tận dụng tài khoản Gemini Web (miễn phí hoặc Gemini Advanced) với khả năng suy luận sâu, ngữ cảnh lớn và phân tích code vượt trội.
-- 💬 **Lệnh Slash `/kg4` (hoặc `/g4`)**: Trong bất kỳ khung chat nào của Antigravity, chỉ cần gõ `/kg4 <câu hỏi>` là Gemini 4 lập tức phản hồi mà không cần thiết lập phức tạp.
+- 🧠 **Mô hình Gemini 4 High (Argon Extended Thinking)**: Luôn mặc định kích hoạt chế độ suy luận mở rộng (Extended Thinking / High Reasoning) đỉnh cao nhất từ Google Gemini Web, phân tích code và giải quyết bài toán phức tạp vượt trội.
+- 💬 **Lệnh Slash `/kg4` (hoặc `/g4`)**: Trong bất kỳ khung chat nào của Antigravity, chỉ cần gõ `/kg4 <câu hỏi>` là Gemini 4 High lập tức phản hồi mà không cần thiết lập phức tạp.
 - 🍪 **Zero-Config Live Cookie**: Tự động đồng bộ cookie phiên làm việc từ trình duyệt **Microsoft Edge**, **Google Chrome**, **Mozilla Firefox**, **Brave**, **Opera** — Không lo hết hạn token.
 - 🌐 **Đa nền tảng, linh hoạt thư mục**: Chạy mượt mà trên Windows, macOS, Linux, đặt repo ở bất kỳ thư mục hay ổ đĩa nào đều tự động nhận diện đường dẫn động 100%.
 - 🔌 **Tích hợp kép**:
-  - **Native MCP Server**: Cung cấp các tools: `gemini_web_ask`, `gemini_web_chat`, `gemini_web_deep_research`, `gemini_web_account_info`.
+  - **Native MCP Server**: Cung cấp các tools: `gemini_web_ask`, `gemini_web_chat`, `gemini_web_deep_research`, `gemini_web_account_info` (mặc định luôn chạy Gemini 4 High).
   - **OpenAI-Compatible Proxy**: Hỗ trợ endpoint `/v1/chat/completions` (Streaming & Non-streaming) tại `http://127.0.0.1:8000/v1`.
+
 
 ---
 

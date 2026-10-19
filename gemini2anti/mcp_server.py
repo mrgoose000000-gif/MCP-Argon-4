@@ -28,16 +28,16 @@ mcp = FastMCP(
 async def gemini_web_ask(
     prompt: str,
     model: str = "gemini-4",
-    extended_thinking: bool = False
+    extended_thinking: bool = True
 ) -> str:
     """
     Gửi câu hỏi hoặc yêu cầu trực tiếp đến Google Gemini Web (gemini.google.com/app).
-    Mặc định sử dụng model Gemini 4 (Gemini 4 Argon) cao cấp nhất.
+    Mặc định sử dụng model Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất).
     
     Args:
         prompt: Nội dung câu hỏi, prompt hoặc tài liệu cần phân tích.
         model: Tên model Gemini Web ('gemini-4' (mặc định - Gemini 4 Argon), 'gemini-flash', 'gemini-pro', 'auto').
-        extended_thinking: Bật chế độ suy nghĩ mở rộng (Gemini Extended Thinking). Mặc định là False.
+        extended_thinking: Bật chế độ suy nghĩ mở rộng (Gemini Extended Thinking). Mặc định luôn là True (Gemini 4 High).
     
     Returns:
         Câu trả lời hoàn chỉnh từ Gemini Web kèm danh sách ảnh (nếu có).
@@ -59,18 +59,18 @@ async def gemini_web_chat(
     message: str,
     session_id: str = "default",
     model: str = "gemini-4",
-    extended_thinking: bool = False
+    extended_thinking: bool = True
 ) -> str:
     """
     Trò chuyện nhiều lượt liên tục (Multi-turn Conversation) với Gemini Web.
-    Mặc định sử dụng model Gemini 4 (Gemini 4 Argon).
+    Mặc định sử dụng model Gemini 4 High (Gemini 4 Argon kèm Extended Thinking).
     Trạng thái ngữ cảnh hội thoại được lưu theo session_id.
     
     Args:
         message: Tin nhắn mới gửi cho Gemini Web.
         session_id: Định danh phiên trò chuyện (ví dụ: 'debug_task_1', 'review_code'). Mặc định là 'default'.
         model: Tên model Gemini Web ('gemini-4', 'gemini-flash', 'gemini-pro', 'auto').
-        extended_thinking: Bật chế độ suy nghĩ mở rộng (Extended Thinking).
+        extended_thinking: Bật chế độ suy nghĩ mở rộng (Extended Thinking). Mặc định luôn là True (Gemini 4 High).
         
     Returns:
         Câu trả lời của Gemini Web trong phiên hội thoại.
