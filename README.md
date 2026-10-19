@@ -1,4 +1,4 @@
-# 🚀 geminiweb2antigravity — Cầu Nối Google Gemini 4 (Argon) Với Antigravity
+# 🚀 McpGemini2Antigravity — Cầu Nối Google Gemini 4 (Argon) Với Antigravity
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-brightgreen.svg)](https://www.python.org/)
@@ -32,9 +32,8 @@ Mở trình duyệt bất kỳ (**Microsoft Edge**, **Chrome** hoặc **Firefox*
 
 ### Bước 2: Tải repository về máy
 ```bash
-git clone https://github.com/duykhanhbv-bit/geminiweb2antigravity.git
-cd geminiweb2antigravity
-
+git clone https://github.com/duykhanhbv-bit/McpGemini2Antigravity.git
+cd McpGemini2Antigravity
 ```
 *(Hoặc tải file ZIP từ GitHub và giải nén vào bất kỳ thư mục nào trên máy tính).*
 
