@@ -43,3 +43,11 @@ desktop.ini
 *.log
 scratch/
 temp/
+
+# Local Agent Workspace & Prompt History (giữ riêng tư cục bộ, không đẩy lên Git)
+.agent/
+
+# Lệnh nội bộ cá nhân (giữ trên máy cục bộ, không phát hành trên Git)
+workflows/g4.md
+skills/g4/
+

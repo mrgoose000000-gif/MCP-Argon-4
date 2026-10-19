@@ -15,7 +15,7 @@ Chỉ với **1 cú click chuột**, hệ thống tự động nhận diện tà
 
 - ⚡ **1-Click Tự Động Kết Nối**: Bấm `ket_noi_gemini_antigravity.bat` (Windows) hoặc chạy `./ket_noi_gemini_antigravity.sh` (Linux/macOS) — Tự động cài đặt thư viện, quét cookie và đăng ký toàn diện.
 - 🧠 **Mô hình Gemini 4 High (Argon Extended Thinking)**: Luôn mặc định kích hoạt chế độ suy luận mở rộng (Extended Thinking / High Reasoning) đỉnh cao nhất từ Google Gemini Web, phân tích code và giải quyết bài toán phức tạp vượt trội.
-- 💬 **Lệnh Slash `/kg4` (hoặc `/g4`)**: Trong bất kỳ khung chat nào của Antigravity, chỉ cần gõ `/kg4 <câu hỏi>` là Gemini 4 High lập tức phản hồi mà không cần thiết lập phức tạp.
+- 💬 **Lệnh Slash `/kg4`**: Trong bất kỳ khung chat nào của Antigravity, chỉ cần gõ `/kg4 <câu hỏi>` là Gemini 4 High lập tức phản hồi mà không cần thiết lập phức tạp.
 - 🍪 **Zero-Config Live Cookie**: Tự động đồng bộ cookie phiên làm việc từ trình duyệt **Microsoft Edge**, **Google Chrome**, **Mozilla Firefox**, **Brave**, **Opera** — Không lo hết hạn token.
 - 🌐 **Đa nền tảng, linh hoạt thư mục**: Chạy mượt mà trên Windows, macOS, Linux, đặt repo ở bất kỳ thư mục hay ổ đĩa nào đều tự động nhận diện đường dẫn động 100%.
 - 🔌 **Tích hợp kép**:
@@ -74,8 +74,6 @@ Sau khi chạy bộ cài xong, hãy mở **Antigravity IDE**, **Desktop App** ho
 - `/kg4 Tối ưu hóa thuật toán sau đây giúp tôi`
 - `/kg4 Phân tích cấu trúc thư mục của dự án này`
 
-*(Lưu ý: Lệnh `/g4` cũng được đăng ký song song làm alias dự phòng).*
-
 ---
 
 ## 🛠️ Các Lệnh Bổ Trợ Dòng Lệnh (CLI)
@@ -106,11 +104,9 @@ gemini2anti/
 ├── .env.example                     # Mẫu cấu hình môi trường tùy chọn
 ├── .gitignore                       # Bảo mật tuyệt đối cookie/token người dùng
 ├── workflows/                       # File định nghĩa Slash Command toàn cục
-│   ├── kg4.md                       # Lệnh /kg4
-│   └── g4.md                        # Lệnh /g4
+│   └── kg4.md                       # Lệnh /kg4
 ├── skills/                          # File kỹ năng Agent Antigravity
-│   ├── kg4/SKILL.md
-│   └── g4/SKILL.md
+│   └── kg4/SKILL.md
 └── gemini2anti/                     # Source code cốt lõi
     ├── client.py                    # Cầu nối phân giải model Gemini 4 Argon
     ├── config.py                    # Module quét cookie tự động từ trình duyệt

@@ -6,7 +6,7 @@ BỘ CÀI ĐẶT TỰ ĐỘNG: KẾT NỐI GOOGLE GEMINI 4 WEB VỚI ANTIGRAVITY
 =============================================================================
 Hỗ trợ: Antigravity IDE, Antigravity Desktop App, Antigravity CLI (agy).
 Hoạt động trên mọi hệ điều hành (Windows, macOS, Linux) và bất kỳ thư mục nào.
-Lệnh slash command kích hoạt: /kg4 (và /g4)
+Lệnh slash command kích hoạt: /kg4
 =============================================================================
 """
 
@@ -160,8 +160,8 @@ def register_mcp_server():
 
 
 def install_slash_commands_and_skills():
-    """Cài đặt slash command /kg4 (và /g4) và skills vào Antigravity toàn cục."""
-    print("\n[Bước 4/5] Cài đặt lệnh slash command '/kg4' & '/g4' vào Antigravity...")
+    """Cài đặt slash command /kg4 và skills vào Antigravity toàn cục."""
+    print("\n[Bước 4/5] Cài đặt lệnh slash command '/kg4' vào Antigravity...")
     GLOBAL_WORKFLOWS_DIR.mkdir(parents=True, exist_ok=True)
     GLOBAL_SKILLS_DIR.mkdir(parents=True, exist_ok=True)
 

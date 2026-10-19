@@ -11,6 +11,20 @@
 ---
 
 ## ✅ Nhiệm Vụ Đã Thực Hiện (Completed)
+- **Tên nhiệm vụ:** Loại bỏ thư mục .agent và lệnh g4 khỏi bản đẩy Git, bảo toàn 100% trên máy cục bộ
+- **Thời điểm hoàn thành:** 2026-10-19 20:38
+- **Tóm tắt kết quả:**
+  - Bổ sung `.agent/`, `workflows/g4.md`, `skills/g4/` vào `.gitignore`.
+  - Thực hiện lệnh `git rm -r --cached` để gỡ bỏ hoàn toàn thư mục `.agent` và các file liên quan tới `g4` khỏi Git tracking.
+  - Bảo toàn nguyên vẹn 100% file vật lý trên máy: thư mục `.agent/` (chứa toàn bộ lịch sử prompt và trạng thái), `workflows/g4.md`, `skills/g4/` và các cấu hình toàn cục `~/.gemini/config/`. Người dùng tiếp tục sử dụng bình thường cả `/g4` và `/kg4` trên máy tính.
+  - Chuẩn hóa `README.md` và `install_gemini_antigravity.py` trên bản Git phát hành tập trung vào lệnh `/kg4`.
+- **Files đã sửa:**
+  - `.gitignore`
+  - `README.md`
+  - `install_gemini_antigravity.py`
+  - `TASKS.md`
+  - `.agent/history/CURRENT_TASK.md`
+
 - **Tên nhiệm vụ:** Cấu hình mặc định toàn diện sang mô hình Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất)
 - **Thời điểm hoàn thành:** 2026-10-19 20:25
 - **Tóm tắt kết quả:**
