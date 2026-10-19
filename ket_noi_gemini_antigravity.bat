@@ -1,8 +1,8 @@
 @echo off
-chcp 65001 >nul
+setlocal
 title KET NOI GEMINI 4 VOI ANTIGRAVITY
 
-:: Chuyen den dung thu muc chua file .bat nay du nguoi dung dat o bat ky dau
+:: Chuyen den dung thu muc chua file .bat
 cd /d "%~dp0"
 
 echo ==============================================================================
@@ -24,8 +24,8 @@ if %ERRORLEVEL% EQU 0 (
 )
 
 echo [LOI] Khong tim thay Python tren may tinh cua ban!
-echo 👉 Vui long tai va cai dat Python tu: https://www.python.org/downloads/
-echo ⚠️ Luu y nho tich chon: "Add Python to PATH" khi cai dat.
+echo [!] Vui long tai va cai dat Python tu: https://www.python.org/downloads/
+echo [!] Luu y nho tich chon: "Add Python to PATH" khi cai dat.
 echo.
 pause
 exit /b 1
