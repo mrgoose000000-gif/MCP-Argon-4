@@ -49,5 +49,9 @@ tạo thành lệnh /g4 để gọi gemini 4 từ gemini web để chạy
 ### [2026-10-19 19:41:09] Prompt
 đóng gói để đẩy lên github chia sẻ cho mọi người sử dụng được ngay, bấm ket_noi_gemini_antigravity.bat là tự động kết nối gemini web với antigravity (cả app, cả agy, cả antigravity ide), dùng được cho mọi người, cho mọi máy tính dù file để ở bất kỳ nơi đâu, mọi hệ điều hành, khi sử dụng gọi lệnh "/kg4" là dùng được như tôi hiện tại
 
+### [2026-10-19 19:57:13] Prompt
+đẩy lên git cho tôi [duykhanhbv-bit/geminiweb2antigravity: Automatically connect to the Gemini web interface to use Gemini 4 for your "Antigravity."](https://github.com/duykhanhbv-bit/geminiweb2antigravity)
+
+
 
 
