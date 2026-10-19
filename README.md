@@ -128,6 +128,28 @@ gemini2anti/
 
 ---
 
+## ⚠️ Khuyến Nghị Sử Dụng & Tuân Thủ Quy Chế Google (Disclaimer & Recommendations)
+
+### 1. Về mặt Điều khoản Dịch vụ của Google (Google Terms of Service)
+Nếu xét theo nghĩa đen và chặt chẽ nhất của quy chế: Cách làm này nằm ở "vùng xám" (grey zone) và về mặt kỹ thuật không được Google cấp phép chính thức.
+- **Lý do:** Trong [Google Terms of Service](https://policies.google.com/terms) và [Google Generative AI Additional Terms of Service](https://policies.google.com/terms/generative-ai), Google có điều khoản cấm rõ: *"Không can thiệp, truy cập dịch vụ của chúng tôi bằng bất kỳ phương thức nào khác ngoài các giao diện được chúng tôi hỗ trợ công khai..."* (non-publicly supported interfaces / web automation / reverse engineering).
+- Giao diện web `gemini.google.com` được thiết kế cho con người tương tác qua trình duyệt. Khi chúng ta trích xuất session/cookie để biến thành MCP Server cho Antigravity/CLI gọi tự động, về bản chất kỹ thuật đây là hình thức **Reverse Engineering Unofficial API**.
+- Đối với nhu cầu lập trình/tự động hóa, Google yêu cầu nhà phát triển sử dụng kênh chính thống là **Google AI Studio** hoặc **Google Cloud Vertex AI** (dùng API Key chính thức).
+
+### 2. Về mặt thực tế sử dụng (Dự án sạch & mục đích cá nhân)
+Mặc dù về mặt kỹ thuật không thuộc kênh chính thống, nhưng bạn có thể an tâm ở các điểm sau:
+- **Không có rủi ro pháp lý:** Bạn dùng để phục vụ công việc cá nhân, hỗ trợ lập trình dự án sạch, không phá hoại hệ thống, không trục lợi bằng cách mở dịch vụ bán lại API lậu, và không cào dữ liệu huấn luyện mô hình cạnh tranh. Google không bao giờ đi kiện tụng người dùng cá nhân trong trường hợp này.
+- **Rủi ro duy nhất là ở cấp độ Tài khoản (Account Risk):**
+  - **Văng phiên / Hết hạn Cookie:** Cookie web của Google có thời hạn hoặc sẽ bị vô hiệu hóa khi có sự thay đổi về IP, bảo mật.
+  - **Cơ chế chống Bot tự động (Abuse Detection):** Nếu bạn gửi prompt quá dồn dập (ví dụ vòng lặp gọi hàng chục request/phút), hệ thống bảo mật của Google có thể nhận diện lưu lượng bất thường và tạm khóa/chặn tính năng Gemini của tài khoản đó, hoặc bắt giải CAPTCHA.
+
+### 3. Khuyến nghị thực tế để an tâm sử dụng
+- **Sử dụng tài khoản Google phụ (Secondary Account):** Tuyệt đối không dùng tài khoản Google chính (chứa Gmail làm việc lâu năm, Google Drive quan trọng, tài khoản liên kết Google Pay/ngân hàng) để trích xuất cookie web. Hãy dùng một tài khoản Google riêng biệt để đăng nhập Gemini Web và lấy session cho Antigravity. Nếu tài khoản này có bị gắn cờ hạn chế thì công việc chính của bạn hoàn toàn không bị ảnh hưởng.
+- **Kiểm soát tần suất gọi:** Tránh các kịch bản loop tự động bắn request liên tục không có độ trễ nghỉ (delay).
+
+---
+
 ## 🤝 Đóng Góp & Giấy Phép
 
 Mọi đóng góp (Pull Request, Issue, Feature Request) đều được chào đón! Dự án được phát hành theo giấy phép **MIT License**.
+

@@ -1,14 +1,19 @@
-# Nhiệm Vụ Đang Thực Hiện (Current Task)
+# NHIỆM VỤ HIỆN TẠI (CURRENT TASK)
 
-- **Tên nhiệm vụ:** Đẩy mã nguồn dự án lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`
-- **Thời điểm bắt đầu:** 2026-10-19 19:57
-- **Trạng thái:** Đang thực hiện (In-Progress)
+- **Tên nhiệm vụ:** Bổ sung phần Khuyến nghị sử dụng & Tuân thủ quy chế Google vào tài liệu dự án và đẩy vào Git
+- **Thời điểm bắt đầu:** 2026-10-19 20:08
+- **Mục tiêu:** 
+  - Đưa phần phân tích và khuyến nghị về Điều khoản dịch vụ Google (Google Terms of Service), thực tế sử dụng dự án sạch và khuyến nghị tài khoản phụ vào `README.md` và `huong_dan_tich_hop_gemini_web_v1.0.md`.
+  - Tạo commit git và đẩy (push) lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`.
 - **Checklist thực hiện:**
-  - [ ] Cập nhật đường dẫn repository trong `README.md` sang `https://github.com/duykhanhbv-bit/geminiweb2antigravity`.
-  - [ ] Thiết lập remote git origin `https://github.com/duykhanhbv-bit/geminiweb2antigravity.git`.
-  - [ ] Đổi nhánh chính sang `main`.
-  - [ ] Commit cập nhật link repo.
-  - [ ] Đẩy code lên GitHub (`git push -u origin main`).
+  - [ ] Cập nhật `README.md` bổ sung mục Khuyến nghị sử dụng & Tuân thủ quy chế Google
+  - [ ] Cập nhật `huong_dan_tich_hop_gemini_web_v1.0.md` bổ sung mục Khuyến nghị
+  - [ ] Stage và kiểm tra diff git
+  - [ ] Commit với message mô tả rõ ràng
+  - [ ] Đẩy code lên GitHub repository (git push origin main)
+  - [ ] Cập nhật `TASKS.md` và `CURRENT_TASK.md` hoàn thành
 - **Files liên quan:**
   - `README.md`
+  - `huong_dan_tich_hop_gemini_web_v1.0.md`
   - `TASKS.md`
+  - `.agent/history/CURRENT_TASK.md`

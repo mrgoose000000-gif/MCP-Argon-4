@@ -52,6 +52,43 @@ tạo thành lệnh /g4 để gọi gemini 4 từ gemini web để chạy
 ### [2026-10-19 19:57:13] Prompt
 đẩy lên git cho tôi [duykhanhbv-bit/geminiweb2antigravity: Automatically connect to the Gemini web interface to use Gemini 4 for your "Antigravity."](https://github.com/duykhanhbv-bit/geminiweb2antigravity)
 
+### [2026-10-19 20:05:58] Prompt
+'G:\My' is not recognized as an internal or external command,
+operable program or batch file.
+'ANG' is not recognized as an internal or external command,
+operable program or batch file.
+'epository:' is not recognized as an internal or external command,
+operable program or batch file.
+'it' is not recognized as an internal or external command,
+operable program or batch file.
+'-u' is not recognized as an internal or external command,
+operable program or batch file.
+'ORLEVEL' is not recognized as an internal or external command,
+operable program or batch file.
+'.' is not recognized as an internal or external command,
+operable program or batch file.
+'🎉' is not recognized as an internal or external command,
+operable program or batch file.
+'ho' is not recognized as an internal or external command,
+operable program or batch file.
+==============================================================================
+'se' is not recognized as an internal or external command,
+operable program or batch file.
+
+==============================================================================
+  ⚠️ Day len GitHub chua hoan tat.
+  Neu trinh duyet hien cua so dang nhap GitHub, vui long bam "Authorize/Sign in".
+==============================================================================
+
+Press any key to continue . . .
 
 
 
+
+
+
+## [2026-10-19 19:59:21]
+**Prompt:** `/g4 việc dùng gemini 4 từ web vào antigravity này có vi phạm gì quy chế của google không?`
+
+## [2026-10-19 20:01:35]
+**Prompt:** `việc như dự án này tôi làm thì hợp lệ quy chế google chứ, hiển nhiên tôi sẽ dùng antigravity làm những dự án sạch`

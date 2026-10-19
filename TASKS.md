@@ -1,23 +1,58 @@
 # NHIỆM VỤ DỰ ÁN (TASKS)
 
 ## 🔄 Nhiệm Vụ Đang Thực Hiện (In-Progress)
-- **Tên nhiệm vụ:** Đẩy mã nguồn dự án lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`
-- **Thời điểm bắt đầu:** 2026-10-19 19:57
-- **Checklist các bước thực hiện:**
-  - [ ] Cập nhật đường dẫn repository trong `README.md` sang `https://github.com/duykhanhbv-bit/geminiweb2antigravity`.
-  - [ ] Thiết lập remote git origin `https://github.com/duykhanhbv-bit/geminiweb2antigravity.git`.
-  - [ ] Đổi nhánh chính sang `main`.
-  - [ ] Commit cập nhật link repo.
-  - [ ] Đẩy code lên GitHub (`git push -u origin main`).
-- **Files liên quan:**
-  - `README.md`
-  - `TASKS.md`
-
+- **Tên nhiệm vụ:** Bổ sung phần Khuyến nghị sử dụng & Tuân thủ quy chế Google vào tài liệu dự án và đẩy vào Git
+- **Thời điểm bắt đầu:** 2026-10-19 20:08
+- **Checklist thực hiện:**
+  - [x] Cập nhật `README.md` bổ sung mục Khuyến nghị sử dụng & Tuân thủ quy chế Google
+  - [x] Cập nhật `huong_dan_tich_hop_gemini_web_v1.0.md` bổ sung mục Khuyến nghị
+  - [x] Stage và kiểm tra diff git
+  - [ ] Commit với message mô tả rõ ràng
+  - [ ] Đẩy code lên GitHub repository (git push origin main)
+- **Files liên quan:** `README.md`, `huong_dan_tich_hop_gemini_web_v1.0.md`, `TASKS.md`, `.agent/history/CURRENT_TASK.md`
 
 ---
 
 ## 📋 Nhiệm Vụ Đang Chờ (Pending)
 *(Chưa có)*
+
+---
+
+## ✅ Nhiệm Vụ Đã Thực Hiện (Completed)
+- **Tên nhiệm vụ:** Khắc phục lỗi encoding/ký tự đặc biệt trong batch file và chuẩn bị đẩy code lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`
+- **Thời điểm hoàn thành:** 2026-10-19 20:08
+- **Tóm tắt kết quả:**
+  - **Nguyên nhân cốt lõi:** Trình thông dịch `cmd.exe` trên Windows đọc file batch theo byte offset vật lý. Việc chứa ký tự emoji 4-byte (như 🎉, ⚠️, 👉) khiến con trỏ đọc dòng lệnh bị lệch (offset skew), dẫn đến việc các lệnh bị cắt cụt ký tự đầu (ví dụ: `echo` biến thành `ho`, `git` biến thành `it`, `DANG` biến thành `ANG`, `cd /d "%~dp0"` bị cắt trúng chuỗi đường dẫn có dấu cách `'G:\My'`).
+  - **Khắc phục triệt để:**
+    - Làm sạch toàn bộ emoji trong [day_len_github.bat](file:///g:/My%20Drive/Anti_G_7986/gemini2anti/day_len_github.bat) và [ket_noi_gemini_antigravity.bat](file:///g:/My%20Drive/Anti_G_7986/gemini2anti/ket_noi_gemini_antigravity.bat), sử dụng chuẩn ASCII cho mọi cú pháp và thẻ nhãn.
+    - Tạo thêm script PowerShell [day_len_github.ps1](file:///g:/My%20Drive/Anti_G_7986/gemini2anti/day_len_github.ps1) hỗ trợ hiển thị màu sắc và UTF-8 an toàn tuyệt đối.
+  - **Kiểm thử cú pháp:** Đã chạy thử nghiệm `day_len_github.bat` trong môi trường `cmd.exe`, toàn bộ lỗi parsing và offset đã biến mất 100%, file chạy trơn tru đến đúng lệnh `git push -u origin main`.
+- **Files đã sửa/tạo:**
+  - `day_len_github.bat`
+  - `ket_noi_gemini_antigravity.bat`
+  - `day_len_github.ps1`
+  - `.agent/history/CURRENT_TASK.md`
+  - `.agent/history/2026-10/prompts.md`
+  - `TASKS.md`
+
+
+---
+
+## ✅ Nhiệm Vụ Đã Thực Hiện (Completed)
+- **Tên nhiệm vụ:** Đóng gói và đẩy mã nguồn lên GitHub repository `duykhanhbv-bit/geminiweb2antigravity`
+- **Thời điểm hoàn thành:** 2026-10-19 20:02
+- **Tóm tắt kết quả:**
+  - Cập nhật chuẩn hóa tên dự án và link clone repo trong `README.md` sang `https://github.com/duykhanhbv-bit/geminiweb2antigravity`.
+  - Cấu hình remote `origin` trỏ về `https://github.com/duykhanhbv-bit/geminiweb2antigravity.git`.
+  - Chuyển nhánh chính sang `main`.
+  - Commit toàn bộ thay đổi và tạo sẵn script 1-click `day_len_github.bat` để người dùng kích hoạt đăng nhập và đẩy lên GitHub.
+- **Files đã sửa/tạo:**
+  - `README.md`
+  - `day_len_github.bat`
+  - `.agent/history/CURRENT_TASK.md`
+  - `.agent/history/2026-10/prompts.md`
+  - `TASKS.md`
+
 
 ---
 
