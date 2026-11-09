@@ -8,10 +8,19 @@
 Đưa sức mạnh mô hình **Google Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất)** từ tài khoản [Google Gemini Web](https://gemini.google.com/app) vào trực tiếp hệ sinh thái **Google Antigravity IDE**.
 
 Tích hợp sẵn:
+- 👑 **Mô hình Dual-Agent Khép Kín (Argon 4 Supreme Supervisor)**: Gemini 4 Argon đóng vai trò Giám sát viên tối cao & Kiến trúc sư trưởng — kiểm soát kế hoạch, thẩm định diff code, bắt lỗi edge cases và cầm tay chỉ việc từng hành động của Antigravity Agent.
 - 📊 **Visual Dashboard (Bảng điều khiển trực quan)** quản lý danh sách tài khoản & quota.
 - ⚡ **Multi-Account Pool & Auto-Failover**: Tự động xoay vòng tài khoản khi tài khoản hiện tại hết quota.
 - 🛡️ **Self-Healing Cookie**: Tự động trích xuất và làm mới cookie từ trình duyệt khi phiên đăng nhập hết hạn.
-- 💬 **Lệnh Slash `/kg4`**: Chỉ cần gõ `/kg4 <câu hỏi>`, Antigravity tự động kích hoạt Gemini 4 High trả lời ngay lập tức.
+- 💬 **Lệnh Slash `/kg4`**: Chỉ cần gõ `/kg4 <câu hỏi>`, hệ thống tự động kích hoạt Gemini 4 High kèm quy trình giám sát toàn diện.
+
+---
+
+## 🏛️ Kiến Trúc Dual-Agent: Argon 4 Supreme Supervisor
+
+Hệ thống vận hành theo nguyên tắc **cầm tay chỉ việc nghiêm ngặt**:
+1. **Gemini 4 Argon (Supreme Supervisor / Cloud):** Vạch ra kiến trúc chuẩn mực, duyệt phương án kỹ thuật (Pre-Execution Audit), soi lỗi bảo mật/hiệu năng và chỉ đạo từng bước thi công.
+2. **Antigravity Agent (Field Engineer / Local):** Nhận lệnh, trực tiếp thao tác ghi file, chạy terminal, chạy test trên máy bạn và chuyển ngược toàn bộ log/stdout về cho Argon 4 nghiệm thu. Không bao giờ hành động cảm tính!
 
 ---
 
