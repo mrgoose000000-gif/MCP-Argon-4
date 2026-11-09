@@ -261,6 +261,23 @@ class AccountManager:
         final_email = email.strip() or prof.get("email") or f"gemini_{int(time.time())}@google.com"
         final_name = name.strip() or prof.get("name") or final_email.split("@")[0]
 
+        # Kiểm tra trùng lặp theo Email (tránh tạo 2 thẻ trùng tài khoản khi cookie đổi session ID)
+        for acc in data.get("accounts", []):
+            if acc.get("email") and acc.get("email").lower() == final_email.lower():
+                acc["secure_1psid"] = secure_1psid
+                acc["secure_1psidts"] = secure_1psidts
+                acc["secure_1psidcc"] = secure_1psidcc
+                acc["status"] = q.get("status", "HEALTHY")
+                acc["tier"] = q.get("tier", "FREE")
+                acc["quota_remaining"] = q.get("quota_remaining", 600)
+                acc["quota_total"] = q.get("quota_total", 600)
+                acc["quota_reset_at"] = q.get("quota_reset_at", "Chưa cập nhật")
+                acc["quota_reset_raw"] = q.get("quota_reset_raw")
+                acc["browser_source"] = browser_source
+                acc["last_checked"] = datetime.now(timezone.utc).isoformat()
+                self._save_data(data)
+                return acc
+
         acc_id = f"acc_{int(time.time())}_{len(data.get('accounts', [])) + 1}"
         is_first = len(data.get("accounts", [])) == 0
 
