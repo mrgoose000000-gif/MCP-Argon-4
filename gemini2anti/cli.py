@@ -128,6 +128,13 @@ def cmd_chat(args):
     return 0
 
 
+def cmd_dashboard(args):
+    """Khởi chạy Visual Dashboard quản lý tài khoản & quota."""
+    from run_dashboard import main as dash_main
+    dash_main()
+    return 0
+
+
 def cmd_mcp(args):
     """Khởi chạy MCP Server qua stdio."""
     from gemini2anti.mcp_server import main as mcp_main
@@ -236,6 +243,9 @@ def main():
     p_chat.add_argument("--thinking", "-t", action="store_true", default=True, help="Chế độ suy nghĩ mở rộng (Extended Thinking / High) - Mặc định: True")
     p_chat.add_argument("--no-thinking", dest="thinking", action="store_false", help="Tắt chế độ suy nghĩ mở rộng")
 
+    # Subcommand: dashboard
+    subparsers.add_parser("dashboard", help="Khởi chạy Bảng Điều Khiển Quản Lý Tài Khoản (Visual Dashboard)")
+
     # Subcommand: mcp
     subparsers.add_parser("mcp", help="Chạy MCP Server (stdio) cho Antigravity")
 
@@ -259,6 +269,7 @@ def main():
     commands = {
         "check": cmd_check,
         "chat": cmd_chat,
+        "dashboard": cmd_dashboard,
         "mcp": cmd_mcp,
         "serve": cmd_serve,
         "install-mcp": cmd_install_mcp,

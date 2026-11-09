@@ -1,19 +1,26 @@
 """
 Module lõi quản lý kết nối và phiên làm việc với Google Gemini Web (gemini.google.com/app).
+Tích hợp quản lý đa tài khoản và Auto-Failover xoay vòng tài khoản khi hết quota.
 """
 
 import asyncio
+import logging
 from typing import AsyncGenerator, Dict, List, Optional, Any
 from gemini_webapi import GeminiClient
 from gemini2anti.config import get_gemini_credentials, get_default_model, get_default_extended_thinking, get_proxy
+from gemini2anti.account_manager import account_manager
+
+logger = logging.getLogger("GeminiClient")
 
 
 class GeminiWebBridge:
     """
     Quản lý phiên kết nối, xác thực và các tác vụ sinh nội dung với Gemini Web.
+    Hỗ trợ xoay vòng tài khoản tự động (Auto-Failover).
     """
     def __init__(self):
         self._client: Optional[GeminiClient] = None
+        self._current_account_id: Optional[str] = None
         self._lock = asyncio.Lock()
         self._sessions: Dict[str, Any] = {}
         self._auth_source: str = ""
@@ -22,18 +29,31 @@ class GeminiWebBridge:
     async def init_client(self, force_refresh: bool = False) -> GeminiClient:
         """
         Khởi tạo hoặc trả về client hiện tại.
-        Tự động lấy cookies và kết nối với Gemini Web.
+        Ưu tiên lấy thông tin từ tài khoản đang Active trong AccountManager.
         """
         async with self._lock:
-            if self._client and not force_refresh:
+            active_acc = account_manager.get_active_account()
+            active_id = active_acc["id"] if active_acc else None
+
+            # Nếu tài khoản đã đổi hoặc force_refresh thì tạo mới client
+            if self._client and not force_refresh and self._current_account_id == active_id:
                 return self._client
 
-            psid, psidts, psidcc, source = get_gemini_credentials()
+            if active_acc and active_acc.get("secure_1psid"):
+                psid = active_acc["secure_1psid"]
+                psidts = active_acc.get("secure_1psidts")
+                psidcc = active_acc.get("secure_1psidcc")
+                source = f"Account Pool: {active_acc.get('email')} ({active_acc.get('name')})"
+                self._current_account_id = active_id
+            else:
+                psid, psidts, psidcc, source = get_gemini_credentials()
+                self._current_account_id = "default_env"
+
             if not psid:
                 raise ValueError(
                     "Không tìm thấy Cookie đăng nhập Gemini! "
-                    "Hãy đăng nhập https://gemini.google.com trên Microsoft Edge/Chrome/Firefox "
-                    "hoặc cấu hình GEMINI_SECURE_1PSID trong file .env."
+                    "Hãy mở Dashboard (http://127.0.0.1:8000/dashboard) để thêm tài khoản "
+                    "hoặc đăng nhập https://gemini.google.com trên Chrome/Edge."
                 )
 
             self._auth_source = source
@@ -41,8 +61,8 @@ class GeminiWebBridge:
 
             client = GeminiClient(
                 secure_1psid=psid,
-                secure_1psidts=psidts,
-                secure_1psidcc=psidcc,
+                secure_1psidts=psidts or None,
+                secure_1psidcc=psidcc or None,
                 proxy=proxy,
             )
 
@@ -79,17 +99,28 @@ class GeminiWebBridge:
         quotas_info = {}
         if hasattr(client, "quotas") and client.quotas:
             for k, v in client.quotas.items():
-                quotas_info[k] = {
-                    "remaining": getattr(v, "remaining", None),
-                    "total": getattr(v, "total", None),
-                    "reset_time": str(getattr(v, "reset_time", None)),
-                }
+                if isinstance(v, dict):
+                    quotas_info[k] = v
+                else:
+                    quotas_info[k] = {
+                        "remaining": getattr(v, "remaining", None),
+                        "total": getattr(v, "total", None),
+                        "reset_time": str(getattr(v, "reset_time", None)),
+                    }
 
         abuse_status = getattr(client, "abuse_status", "clean")
-        
+        active_acc = account_manager.get_active_account()
+
         return {
             "status": "connected",
             "auth_source": self._auth_source,
+            "active_account": {
+                "name": active_acc.get("name") if active_acc else "Unknown",
+                "email": active_acc.get("email") if active_acc else "Unknown",
+                "tier": active_acc.get("tier", "PRO") if active_acc else "PRO",
+                "quota_remaining": active_acc.get("quota_remaining") if active_acc else None,
+                "quota_reset_at": active_acc.get("quota_reset_at") if active_acc else None,
+            },
             "abuse_status": abuse_status,
             "quotas": quotas_info,
             "available_models": self._available_models,
@@ -146,12 +177,15 @@ class GeminiWebBridge:
     ) -> Dict[str, Any]:
         """
         Tạo phản hồi hoàn chỉnh từ Gemini Web (mặc định Gemini 4 High - Extended Thinking).
+        Hỗ trợ Auto-Failover: tự động xoay vòng sang tài khoản tiếp theo nếu tài khoản hiện tại hết quota.
         """
         if extended_thinking is None:
             extended_thinking = get_default_extended_thinking()
 
+        max_attempts = 4
         last_err = None
-        for attempt in range(3):
+
+        for attempt in range(max_attempts):
             try:
                 client = await self.init_client(force_refresh=(attempt > 0))
                 resolved_model = self._resolve_model(client, model)
@@ -170,7 +204,24 @@ class GeminiWebBridge:
                 }
             except Exception as e:
                 last_err = e
-                if attempt < 2:
+                err_msg = str(e).lower()
+                logger.warning(f"Lỗi lượt {attempt+1}: {e}")
+
+                # Nhận diện lỗi hết quota hoặc bị hạn chế lượt gọi
+                is_quota_issue = any(term in err_msg for term in [
+                    "quota", "429", "rate limit", "credits", "exhausted", "abuse", "limit exceeded"
+                ])
+
+                if is_quota_issue and attempt < max_attempts - 1:
+                    next_acc = account_manager.rotate_to_next_account()
+                    if next_acc:
+                        logger.info(f"⚡ [Auto-Failover] Đã tự động chuyển sang tài khoản: {next_acc.get('email')}")
+                        async with self._lock:
+                            self._client = None
+                        await asyncio.sleep(1)
+                        continue
+
+                if attempt < max_attempts - 1:
                     await asyncio.sleep(1.5 * (attempt + 1))
 
         raise last_err
@@ -183,12 +234,22 @@ class GeminiWebBridge:
         files: Optional[List[Any]] = None,
     ) -> AsyncGenerator[str, None]:
         """
-        Stream từng mẩu phản hồi (token delta) từ Gemini Web.
+        Stream từng mẩu phản hồi (token delta) từ Gemini Web kèm Auto-Failover.
         """
         if extended_thinking is None:
             extended_thinking = get_default_extended_thinking()
 
-        client = await self.init_client()
+        try:
+            client = await self.init_client()
+        except Exception:
+            next_acc = account_manager.rotate_to_next_account()
+            if next_acc:
+                async with self._lock:
+                    self._client = None
+                client = await self.init_client()
+            else:
+                raise
+
         resolved_model = self._resolve_model(client, model)
 
         last_length = 0
@@ -213,7 +274,6 @@ class GeminiWebBridge:
     ) -> Dict[str, Any]:
         """
         Gửi tin nhắn trong phiên hội thoại nhiều lượt (Multi-turn Chat Session).
-        Mặc định sử dụng Gemini 4 High (Extended Thinking).
         """
         if extended_thinking is None:
             extended_thinking = get_default_extended_thinking()

@@ -6,6 +6,9 @@
 .env
 .env.local
 *.env
+accounts.json
+*.json.bak
+accounts_backup.json
 
 # Python Cache & Bytecode
 __pycache__/

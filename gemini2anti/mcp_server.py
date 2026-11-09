@@ -1,6 +1,6 @@
 """
 MCP Server (Model Context Protocol) cho Google Gemini Web (gemini.google.com/app).
-Tích hợp trực tiếp vào Antigravity IDE và Antigravity CLI (agy).
+Tích hợp trực tiếp vào Antigravity IDE và Antigravity CLI (agy) với khả năng quản lý bể tài khoản.
 """
 
 import sys
@@ -13,8 +13,8 @@ except (ImportError, ModuleNotFoundError):
     from mcp.server.mcpserver import MCPServer as FastMCP
 
 from gemini2anti.client import bridge
+from gemini2anti.account_manager import account_manager
 
-# Cấu hình logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("GeminiWebMCP")
 
@@ -33,6 +33,7 @@ async def gemini_web_ask(
     """
     Gửi câu hỏi hoặc yêu cầu trực tiếp đến Google Gemini Web (gemini.google.com/app).
     Mặc định sử dụng model Gemini 4 High (Gemini 4 Argon kèm Extended Thinking suy luận sâu cao nhất).
+    Hỗ trợ Auto-Failover: tự động chuyển tài khoản khác nếu tài khoản hiện tại hết quota.
     
     Args:
         prompt: Nội dung câu hỏi, prompt hoặc tài liệu cần phân tích.
@@ -64,16 +65,6 @@ async def gemini_web_chat(
     """
     Trò chuyện nhiều lượt liên tục (Multi-turn Conversation) với Gemini Web.
     Mặc định sử dụng model Gemini 4 High (Gemini 4 Argon kèm Extended Thinking).
-    Trạng thái ngữ cảnh hội thoại được lưu theo session_id.
-    
-    Args:
-        message: Tin nhắn mới gửi cho Gemini Web.
-        session_id: Định danh phiên trò chuyện (ví dụ: 'debug_task_1', 'review_code'). Mặc định là 'default'.
-        model: Tên model Gemini Web ('gemini-4', 'gemini-flash', 'gemini-pro', 'auto').
-        extended_thinking: Bật chế độ suy nghĩ mở rộng (Extended Thinking). Mặc định luôn là True (Gemini 4 High).
-        
-    Returns:
-        Câu trả lời của Gemini Web trong phiên hội thoại.
     """
     try:
         res = await bridge.chat(message=message, session_id=session_id, model=model, extended_thinking=extended_thinking)
@@ -88,15 +79,87 @@ async def gemini_web_chat(
 
 
 @mcp.tool()
-async def gemini_web_deep_research(topic: str) -> str:
+async def gemini_web_account_info() -> str:
     """
-    Kích hoạt tính năng Deep Research từ tài khoản Google Gemini Web để nghiên cứu chuyên sâu về một đề tài phức tạp.
+    Kiểm tra trạng thái tài khoản Gemini Web đang kích hoạt: quota còn lại, thời gian reset, danh sách tài khoản trong Pool.
+    
+    Returns:
+        Bản tóm tắt JSON định dạng đẹp về tình trạng tài khoản và model.
+    """
+    try:
+        status = await bridge.get_status()
+        accounts = account_manager.get_all_accounts()
+        status["pool_summary"] = {
+            "total_accounts": len(accounts),
+            "accounts": [
+                {
+                    "name": a.get("name"),
+                    "email": a.get("email"),
+                    "is_active": a.get("is_active"),
+                    "status": a.get("status"),
+                    "quota_remaining": a.get("quota_remaining"),
+                    "quota_reset_at": a.get("quota_reset_at")
+                }
+                for a in accounts
+            ]
+        }
+        return json.dumps(status, ensure_ascii=False, indent=2)
+    except Exception as e:
+        return f"Lỗi kiểm tra thông tin tài khoản: {str(e)}"
+
+
+@mcp.tool()
+async def gemini_web_list_accounts() -> str:
+    """
+    Xem danh sách tất cả các tài khoản Google Gemini đã lưu trong hệ thống kèm Quota và trạng thái.
+    """
+    accounts = account_manager.get_all_accounts()
+    if not accounts:
+        return "Hiện chưa có tài khoản nào được lưu."
+
+    lines = ["**Danh sách tài khoản Google Gemini:**\n"]
+    for i, a in enumerate(accounts, 1):
+        active_tag = "⭐ [ĐANG KÍCH HOẠT]" if a.get("is_active") else ""
+        lines.append(
+            f"{i}. **{a.get('name')}** (`{a.get('email')}`) {active_tag}\n"
+            f"   - Trạng thái: `{a.get('status', 'UNKNOWN')}` | Gói: `{a.get('tier', 'PRO')}`\n"
+            f"   - Quota còn lại: **{a.get('quota_remaining', 0)}/{a.get('quota_total', 600)} credits**\n"
+            f"   - Thời gian Reset: `{a.get('quota_reset_at', 'Chưa rõ')}`\n"
+            f"   - ID tài khoản: `{a.get('id')}`"
+        )
+    return "\n\n".join(lines)
+
+
+@mcp.tool()
+async def gemini_web_switch_account(account_id_or_email: str) -> str:
+    """
+    Chuyển đổi tài khoản Google Gemini đang sử dụng trong Antigravity.
     
     Args:
-        topic: Chủ đề hoặc bài toán cần Gemini Web nghiên cứu đa nguồn.
-        
-    Returns:
-        Báo cáo kết quả nghiên cứu chi tiết từ Google Gemini.
+        account_id_or_email: ID tài khoản (ví dụ 'acc_primary') hoặc địa chỉ email tài khoản cần kích hoạt.
+    """
+    accounts = account_manager.get_all_accounts()
+    target_id = None
+    target_email = ""
+    for a in accounts:
+        if a.get("id") == account_id_or_email or a.get("email") == account_id_or_email:
+            target_id = a.get("id")
+            target_email = a.get("email")
+            break
+
+    if not target_id:
+        return f"Không tìm thấy tài khoản tương ứng với '{account_id_or_email}'."
+
+    acc = account_manager.switch_account(target_id)
+    if acc:
+        return f"Đã chuyển thành công sang tài khoản: **{acc.get('name')}** (`{acc.get('email')}`)."
+    return "Lỗi khi chuyển tài khoản."
+
+
+@mcp.tool()
+async def gemini_web_deep_research(topic: str) -> str:
+    """
+    Kích hoạt tính năng Deep Research từ tài khoản Google Gemini Web.
     """
     try:
         res = await bridge.deep_research(topic=topic)
@@ -107,27 +170,9 @@ async def gemini_web_deep_research(topic: str) -> str:
 
 
 @mcp.tool()
-async def gemini_web_account_info() -> str:
-    """
-    Kiểm tra trạng thái tài khoản Gemini Web: quota còn lại, thời gian reset, danh sách model khả dụng, nguồn cookie.
-    
-    Returns:
-        Bản tóm tắt JSON định dạng đẹp về tình trạng tài khoản và model.
-    """
-    try:
-        status = await bridge.get_status()
-        return json.dumps(status, ensure_ascii=False, indent=2)
-    except Exception as e:
-        return f"Lỗi kiểm tra thông tin tài khoản: {str(e)}"
-
-
-@mcp.tool()
 async def gemini_web_reset_session(session_id: str = "default") -> str:
     """
     Xóa lịch sử một phiên chat với Gemini Web để bắt đầu lại ngữ cảnh mới.
-    
-    Args:
-        session_id: Tên phiên chat cần xóa.
     """
     success = await bridge.reset_session(session_id=session_id)
     if success:
