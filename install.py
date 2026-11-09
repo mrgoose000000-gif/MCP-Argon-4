@@ -111,6 +111,12 @@ def install_kg4_skill(repo_dir: Path):
     if source_skill.exists():
         shutil.copy2(source_skill, target_skill_file)
         log_success(f"Đã cài đặt Skill /kg4 vào: {target_skill_file}")
+
+        # Tự động đồng bộ sang OpenCode nếu có thư mục ~/.agents/skills hoặc ~/.claude/skills
+        for opencode_skill_dir in [home_dir / ".agents" / "skills" / "kg4", home_dir / ".claude" / "skills" / "kg4"]:
+            opencode_skill_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_skill, opencode_skill_dir / "SKILL.md")
+        log_success("Đã đồng bộ Skill /kg4 vào kho kỹ năng của OpenCode!")
     else:
         log_warning("Không tìm thấy skills/kg4/SKILL.md trong repo để cài đặt.")
 
